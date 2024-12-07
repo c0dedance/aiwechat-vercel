@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/pwh-pwh/aiwechat-vercel/chat"
 	"github.com/pwh-pwh/aiwechat-vercel/config"
 	"github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
@@ -45,15 +44,10 @@ func Wx(rw http.ResponseWriter, req *http.Request) {
 }
 
 func handleWxMessage(msg *message.MixMessage) (replyMsg string) {
-	msgType := msg.MsgType
-	msgContent := msg.Content
-	userId := string(msg.FromUserName)
-	bot := chat.GetChatBot(config.GetUserBotType(userId))
-	if msgType == message.MsgTypeText {
-		replyMsg = bot.Chat(userId, msgContent)
-	} else {
-		replyMsg = bot.HandleMediaMsg(msg)
-	}
-
-	return
+	// 打印整个消息对象
+	fmt.Printf("收到微信消息: %+v\n", msg)
+	
+	// 使用fmt.Sprintf将整个消息对象转换为字符串返回
+	return fmt.Sprintf("%+v", msg)
 }
+
